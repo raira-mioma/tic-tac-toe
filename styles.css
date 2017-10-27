@@ -16,20 +16,45 @@
 	-moz-border-radius: 10px;
 	-webkit-border-radius: 10px;*/
 	height: 130px;
-	width: 130px;;
+	width: 130px;
 }	
 
 .row {
 	margin-bottom: 1%;
 }
 
-.col-md-7, .col-xs-4 {
-	padding-right: 0px;
-	padding-left: 0px;
+.col-md-4, .col-xs-4 {
+	padding-right: 15px;
+	padding-left: 15px;
+	margin-right: -10px;
+}
+
+.modal-body {
+  text-align: center;
+}
+
+.modal-dialog {
+	width: 450px;
+}
+
+.modal-header {
+	text-align: center;
+}
+
+.choice:hover {
+  background-color: #afcbd8; !important;
+}
+
+.btn {
+  border: none;
+  opacity: 85%;
+  border-radius: 0px;
+  width: 200px;
+  height: 50px;
 }
 
 #background {
-  background-image: url("https://www.colourbox.com/preview/8468582-background-of-repeating-geometric-stars-spectrum-geometric-background-retro-hipster-color-spectrum-background-square-composition-with-geometric-color-flow-effect.jpg");
+  background-image: url("https://a.wattpad.com/userbg/WinterGirl10.26433.jpg");
   position: fixed;
   top: 0;
   left: 0;
@@ -45,9 +70,21 @@
   width: 400px;
   background-color: #383838;
   border-radius: 8px;
-
+  margin-left:auto;
+  margin-right:auto;
+  display:block;
+  margin-top: 25%;
+  opacity: 0.8;
 }
 
-#indentation {
-	margin-right: 5%;
+#start-button-container {
+	margin-top: 5%;
+}
+
+#start-button {
+   margin-left:auto;
+   margin-right:auto;
+   display:block;
+   
+   /*it is centered */
 }

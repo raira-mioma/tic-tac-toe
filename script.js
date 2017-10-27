@@ -1,3 +1,3 @@
-$(document).ready(function(){
-	$("#myModal").modal("show");
-});
+/*$(document).ready(function(){
+	$("#side-choice-modal").modal("show");
+});*/

@@ -14,22 +14,24 @@
 </head>
 <body>
 
-<div id="background"></div><!--opaque background picture-->
+<div id="background"></div><!--a bit opaque background picture-->
 
 <div class="container-fluid">
 
   <!--MODAL-->
-   <div class="modal fade" id="myModal" role="dialog">
+   <div class="modal fade" id="side-choice-modal" role="dialog">
     <div class="modal-dialog">
     
       <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Modal Header</h4>
+          <h4 class="modal-title">Choose your side</h4>
         </div>
         <div class="modal-body">
-          <p>Some text in the modal.</p>
+          <p>Which side do you prefer?</p>
+		  <button type="button" class="btn btn-default choice" data-dismiss="modal">X</button>
+		  <button type="button" class="btn btn-default choice" data-dismiss="modal">O</button>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -38,11 +40,14 @@
       
     </div>
   </div>
+  <!--MODAL-->
 
+  <!--PLAYBOARD CONTAINER---->
   <div class="row">
 	<div class="col-md-4" id="indentation"></div> <!--indentation-->
 	<!--PLAYBOARD-->
-	<div class="col-md-3" id="playboard">
+	<div class="col-md-4">
+	 <div id="playboard">
 	  <!--ROW 1-->
 	  <div class="row" id="row1">
 	  
@@ -72,7 +77,7 @@
         
 		<div class="col-md-4 col-xs-4">
 		  <div class="border-right border-bottom cell"> 
-            </div>
+          </div>
 		</div>
         
 		<div class="col-md-4 col-xs-4">
@@ -98,12 +103,22 @@
            </div>
 		</div>
 	  </div>
+	  </div>
 	  
 	</div>
   </div>
+  <!--PLAYBOARD CONTAINER---->
   
-  
-  
+	<!--START BUTTON-->
+	<div class="container-fluid" id="start-button-container">
+	  <div class="row">
+		<div class="col-md-12">
+			<button class="btn btn-default" id="start-button">Game start</button>
+		</div>
+	  </div>	
+	</div>
+	<!--START BUTTON-->
+
 </div>
 
 </body>
