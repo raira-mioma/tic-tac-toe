@@ -11,10 +11,6 @@
 }
 
 .cell {
-	/*margin-top:10px;*/
-	/*border-radius: 10px;
-	-moz-border-radius: 10px;
-	-webkit-border-radius: 10px;*/
 	height: 130px;
 	width: 130px;
 }	
@@ -27,6 +23,11 @@
 	padding-right: 15px;
 	padding-left: 15px;
 	margin-right: -10px;
+}
+
+.modal {
+  background: rgba(0,0,0,0.4);
+  border-radius: 0px;
 }
 
 .modal-body {
@@ -45,12 +46,16 @@
   background-color: #afcbd8; !important;
 }
 
-.btn {
-  border: none;
-  opacity: 85%;
-  border-radius: 0px;
-  width: 200px;
-  height: 50px;
+.fade.in {
+	border: none;
+	background: rgba(0,0,0,0.4);
+    border-radius: 0px;
+}
+
+.x {
+	font-size: 95px;
+	text-align:center;
+	font-family: "Indie Flower";
 }
 
 #background {
@@ -85,6 +90,23 @@
    margin-left:auto;
    margin-right:auto;
    display:block;
-   
    /*it is centered */
+}
+
+#start-button {
+  border: none;
+  background: rgba(0,0,0,0.2);
+  border-radius: 0px;
+  width: 200px;
+  height: 50px;
+  font-size: 20px;
+}
+
+#start-button:hover {
+  border: none;
+  background: rgba(0,0,0,0.4);
+  border-radius: 0px;
+  width: 200px;
+  height: 50px;
+  color: #cdcdcd;
 }
