@@ -11,6 +11,7 @@
 }
 
 .cell {
+	color: #cdcdcd;
 	height: 130px;
 	width: 130px;
 }	
@@ -30,6 +31,11 @@
   border-radius: 0px;
 }
 
+.modal-content {
+	border-radius: 0px;
+	background-color: rgba(244, 244, 244, 0.8);
+}
+
 .modal-body {
   text-align: center;
 }
@@ -42,8 +48,9 @@
 	text-align: center;
 }
 
-.choice:hover {
-  background-color: #afcbd8; !important;
+.modal-button {
+	border-radius: 0px;
+	background-color: rgba(244, 244, 244, 0.8);
 }
 
 .fade.in {
