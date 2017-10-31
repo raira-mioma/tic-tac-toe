@@ -17,6 +17,28 @@
 
  <div id="background"></div><!--a bit opaque background picture-->
 
+   <!--FIRST TURN MODAL-->
+   <div class="modal fade" id="first-turn-modal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Choose your side</h4>
+        </div>
+        <div class="modal-body">
+          <p>Which side do you prefer?</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default modal-button" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  <!--FIRST TURN MODAL-->
+ 
   <!--SIDE CHOICE MODAL-->
    <div class="modal fade" id="side-choice-modal" role="dialog">
     <div class="modal-dialog">
@@ -52,7 +74,7 @@
           <h4 class="modal-title">Game over</h4>
         </div>
         <div class="modal-body">
-          <p>You win!</p>
+          <p id="result">You win!</p>
 		  <button type="button" class="btn btn-default modal-button" data-dismiss="modal" id="play-again-button">Play again</button>
         </div>
         <div class="modal-footer">
@@ -70,7 +92,7 @@
 
   <!--PLAYBOARD CONTAINER---->
   <div class="row">
-	<div class="col-md-4" id="indentation"></div> <!--indentation-->
+	<div class="col-md-4"></div> <!--indentation-->
 	<!--PLAYBOARD-->
 	<div class="col-md-4">
 	 <div id="playboard">
@@ -130,6 +152,41 @@
 		</div>
 	  </div>
 	  </div>
+	  
+	</div>
+	<div class="col-md-4">
+	  <div class="row" id="score-row">
+	    <div class="col-md-1"></div><!--indentation-->
+		<div class="col-md-6">
+		  <div id="score">
+	       <h1>Score</h1>
+		   <hr/>
+		   <!--PLAYER NAMES-->
+		     <div class="row">
+			   <div class="col-md-6">
+			     <div class="row scorer-name" id="player-score-header">
+				   <h2>Player</h2>  
+				 </div>
+
+			     <div class="row">
+				   <h2 id="player-score">0</h2>
+				 </div>
+			   </div>
+			   <div class="col-md-6">
+			     <div class="row scorer-name" id="ai-score-header">
+				   <h2>AI</h2>
+				 </div>
+
+				 <div class="row">
+				   <h2 id="ai-score">0</h2>
+				 </div>
+			   </div>
+			 </div>
+	      </div>
+		</div>
+	  </div>
+	  
+
 	  
 	</div>
   </div>

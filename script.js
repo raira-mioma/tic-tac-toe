@@ -2,21 +2,40 @@
 	$("#side-choice-modal").modal("show");
 });*/
 
-//GAME LOGIC
+var winCombo = [
+[1, 2, 3], 
+[4, 5, 6],
+[7, 8, 9],
+[1, 4, 7], 
+[2, 5, 8], 
+[3, 6, 9], 
+[1, 5, 9], 
+[3, 5, 7]
+]
+
+
+//GAME
 var myGame = {
 	playerSide : "",
 	computerSide : "",
 	gameInPlay : false,
 	initialize: function() {
 		this.gameInPlay = true;
-		//clear the playboard here;
+		//clean the playboard here;
+		cleanPlayboard();
 		//clear all arrays with numbers
-		//and also the playboard div itself
-		//clear all <p> from there
+		playboard = [];
+		playerTurns = [];
+		AITurns = [];
 	}
 	
 }
-//GAME LOGIC
+//GAME
+
+//Clean the playboard
+function cleanPlayboard() {
+	$(".x").remove();
+}
 
 //playboard 
 var playboard = [];
@@ -47,6 +66,7 @@ $(function() {
 		myGame.playerSide = "X"
         myGame.computerSide = "O";
 
+		startGame();
     }
   });
 });
@@ -60,9 +80,37 @@ $(function() {
 		myGame.playerSide = "O"
         myGame.computerSide = "X";
 
+		startGame();
     }
   });
 });
+
+//start game
+function startGame() {
+	var turn = Math.random()*2;
+	var $turnP = $("#first-turn-modal p");
+	
+	
+	if (turn <= 1 )
+	{ 
+
+       $($turnP).text("AI makes first turn!");
+	   showTurnModal();
+	   
+       makeAIturn();
+	}
+	else
+	{
+      $($turnP).text("You make first turn!");
+	  showTurnModal();
+	}
+	
+}
+
+function showTurnModal() {
+	var $turn = $("#first-turn-modal");
+	$($turn).modal("show");
+}
 
 //making a turn
 $(function() {
@@ -79,16 +127,14 @@ $(function() {
 			  var turn = parseInt($(this).attr("value"));
               playboard.push(turn);
 			  playerTurns.push(turn);
-			  
-			//check for last or no cells - AI can't make a turn
-			//if there's no free cell
-            let freeCells = getFreeCells();			
-			if (freeCells.length === 0)
-				$("#game-over-modal").modal("show");
+
 			}
 			
+			//push 2 commands below in upper if?? todo
+			
 			//checkWinCOmbo todo
-            checkWinCombo();			
+            if (checkWinCombo())
+				return;
 						
 			//make AI turn 
 			makeAIturn();
@@ -103,8 +149,6 @@ function makeAIturn() {
 	playboard.sort();
 	
 	let freeCells = getFreeCells();
-	
-	//check for last cell!!! todo - 
 	
 	//make a turn
 	var nextCell = getAITurnCell();
@@ -123,6 +167,16 @@ function getFreeCells() {
 		return !playboard.includes(x);
 	});
 }
+/*
+//check for last or no cells - AI can't make a turn
+//if there's no free cell
+function checkFreeCells() {
+	let freeCells = getFreeCells();			
+}
+*/
+function gameOver() {
+	$("#game-over-modal").modal("show");
+}
 
 function getAITurnCell() {
 	return 1;
@@ -130,18 +184,77 @@ function getAITurnCell() {
 
 function checkWinCombo() {
 	
-	//update score todo
+	var playerWon = checkEachPlayerWin(playerTurns);
+	var AIWon = checkEachPlayerWin(AITurns);
+	var freeCells = getFreeCells();
 	
+	if (playerWon)
+	{
+		updateScore("player");
+		updateGameOverModal("win");
+		gameOver();
+		return true;
+	}
+	if (AIWon)
+	{
+		updateScore("ai") ;
+		updateGameOverModal("lose");
+		gameOver();
+		return true;
+	}
+	else if (freeCells.length === 0) {
+		updateGameOverModal("tie");
+		gameOver();
+		return true;
+	}
+	
+	return false;
+}
+
+//check if player's array has a winCombo
+function checkEachPlayerWin(playerArr){
+	
+	var combo = [];
+	var result = false;
+		
+	for (var i=0; i< winCombo.length; i++){
+		
+		combo = playerArr.filter(function(elem){
+			return winCombo[i].includes(elem);
+		})
+		
+		if (combo.length === 3)
+		{
+			result = true;
+			break;
+		}
+	}
+	
+	return result;
+}
+
+function updateScore(winner) {
+	var score = parseInt($("#" + winner+"-score").text());
+	score++;
+	$("#" + winner+"-score").text(score);
+}
+
+function updateGameOverModal(result) {
+	if (result === "win" || result === "lose") {
+		$("#result").text("You " + result + "!");
+	}
+	else {
+		$("#result").text("Tied!");
+	}
 }
 
 //Play again - reset playboard
 $(function() {
 	$("#play-again-button").on({
     click: function(e){
-	  
 	  //initialize game
 	  myGame.initialize();
-
+	  startGame();
     }
   });
 });

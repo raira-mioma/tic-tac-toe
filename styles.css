@@ -1,3 +1,8 @@
+hr {
+  border-top: dotted 2px;	
+  color: #383838;
+}
+
 .border-right {
 	border-right-style: dotted;
 	color: #cdcdcd;
@@ -65,6 +70,12 @@
 	font-family: "Indie Flower";
 }
 
+.scorer-name {
+	border-bottom-style: dotted;
+	border-bottom-width: 2px;
+	color: #383838;
+}
+
 #background {
   background-image: url("https://a.wattpad.com/userbg/WinterGirl10.26433.jpg");
   position: fixed;
@@ -116,4 +127,23 @@
   width: 200px;
   height: 50px;
   color: #cdcdcd;
+}
+
+#score-row{
+	margin-top: 30%;
+}
+
+#score {
+    padding-top: 5px;
+	padding-bottom: 5px;
+	text-align:center;
+	background-color: rgba(0,0,0,0.2);
+}
+
+#player-score-header {
+	margin-left: auto;
+}
+
+#ai-score-header {
+	margin-right: auto;
 }
