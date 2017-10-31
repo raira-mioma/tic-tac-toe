@@ -90,13 +90,10 @@ function startGame() {
 	var turn = Math.random()*2;
 	var $turnP = $("#first-turn-modal p");
 	
-	
 	if (turn <= 1 )
 	{ 
-
        $($turnP).text("AI makes first turn!");
 	   showTurnModal();
-	   
        makeAIturn();
 	}
 	else
@@ -104,7 +101,6 @@ function startGame() {
       $($turnP).text("You make first turn!");
 	  showTurnModal();
 	}
-	
 }
 
 function showTurnModal() {
@@ -127,7 +123,6 @@ $(function() {
 			  var turn = parseInt($(this).attr("value"));
               playboard.push(turn);
 			  playerTurns.push(turn);
-
 			}
 			
 			//push 2 commands below in upper if?? todo
@@ -138,7 +133,6 @@ $(function() {
 						
 			//make AI turn 
 			makeAIturn();
-		
 		}
 	})
 });
@@ -152,13 +146,12 @@ function makeAIturn() {
 	
 	//make a turn
 	var nextCell = getAITurnCell();
-	var AITurn = freeCells[nextCell];//make this random
+	var AITurn = freeCells[nextCell];
     var $newCell = "#cell-" + AITurn;
 	$($newCell).append("<p class='x'>" + myGame.computerSide + "</p>");	
 	playboard.push(AITurn);
 	AITurns.push(AITurn);
 	
-	//checkWinCOmbo todo
 	checkWinCombo();			
 }
 
@@ -167,18 +160,25 @@ function getFreeCells() {
 		return !playboard.includes(x);
 	});
 }
-/*
-//check for last or no cells - AI can't make a turn
-//if there's no free cell
-function checkFreeCells() {
-	let freeCells = getFreeCells();			
-}
-*/
+
 function gameOver() {
 	$("#game-over-modal").modal("show");
 }
 
+//AI decisions
 function getAITurnCell() {
+	//check if your oppponent is close to a win combo
+	var closeCell = checkPlayerCloseToCombo();
+	
+	var possibleCombo = [];
+	
+	if (closeCell === 0){
+		//find possible combo's for you
+		possibleCombo = findPossibleCombo;
+	}
+	
+	
+	
 	return 1;
 }
 
@@ -211,6 +211,10 @@ function checkWinCombo() {
 	return false;
 }
 
+function findPossibleCombo() {
+	
+}
+
 //check if player's array has a winCombo
 function checkEachPlayerWin(playerArr){
 	
@@ -230,6 +234,29 @@ function checkEachPlayerWin(playerArr){
 		}
 	}
 	
+	return result;
+}
+
+//check if a player is close to a combo
+function checkPlayerCloseToCombo(){
+	
+	var combo = [];
+	var result = false;
+		
+	for (var i=0; i< winCombo.length; i++){
+		
+		combo = playerTurns.filter(function(elem){
+			return winCombo[i].includes(elem);
+		})
+		
+		if (combo.length === 2)
+		{
+			//return a cell which is not filled yet - todo
+			result = true;
+			break;
+		}
+	}
+	//return 0 if player is not close to any combo yet
 	return result;
 }
 
