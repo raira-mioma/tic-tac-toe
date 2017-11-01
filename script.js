@@ -1,7 +1,3 @@
-/*$(document).ready(function(){
-	$("#side-choice-modal").modal("show");
-});*/
-
 var winCombo = [
 [1, 2, 3], 
 [4, 5, 6],
@@ -146,11 +142,11 @@ function makeAIturn() {
 	
 	//make a turn
 	var nextCell = getAITurnCell();
-	var AITurn = freeCells[nextCell];
-    var $newCell = "#cell-" + AITurn;
+	//var AITurn = freeCells[nextCell];
+    var $newCell = "#cell-" + nextCell;
 	$($newCell).append("<p class='x'>" + myGame.computerSide + "</p>");	
-	playboard.push(AITurn);
-	AITurns.push(AITurn);
+	playboard.push(nextCell);
+	AITurns.push(nextCell);
 	
 	checkWinCombo();			
 }
@@ -167,19 +163,50 @@ function gameOver() {
 
 //AI decisions
 function getAITurnCell() {
-	//check if your oppponent is close to a win combo
-	var closeCell = checkPlayerCloseToCombo();
 	
-	var possibleCombo = [];
+	var result = 1;
 	
-	if (closeCell === 0){
-		//find possible combo's for you
-		possibleCombo = findPossibleCombo;
+	//check if player is close to a win combo;
+	//gets you the last cell to win
+	var closeCellPlayer = checkPlayerCloseToCombo(playerTurns);
+	 //checks if AI is close to a win combo
+	  //gets the last cell
+	var closeCellAI = checkPlayerCloseToCombo(AITurns);
+	
+	if (closeCellPlayer !== 0 && closeCellAI !== 0)
+		return closeCellAI;
+	
+	if (closeCellPlayer === 0)
+	{
+	 
+	  if (closeCellAI === 0){
+
+	    //gets best possible winCombo for AI
+		var possCombo = findPossibleCombo();
+		
+		let freeCells = getFreeCells();
+		
+		if (possCombo === undefined) {
+			
+			let freeRand = Math.floor(Math.random() * freeCells.length);
+			return freeCells[freeRand];
+		}
+		
+		var freePossComboCell = possCombo.filter(function(elem) {
+			return freeCells.includes(elem);
+		});
+		
+		var rand = Math.floor(Math.random() * freePossComboCell.length);
+		
+		//gets first cell from best winCombo
+		var possibleComboCell = freePossComboCell[rand];
+	    		 
+		return possibleComboCell; 
+	  }
+	  return closeCellAI;
 	}
 	
-	
-	
-	return 1;
+	return closeCellPlayer;
 }
 
 function checkWinCombo() {
@@ -211,8 +238,55 @@ function checkWinCombo() {
 	return false;
 }
 
+
+//find possible combo for AI
 function findPossibleCombo() {
 	
+	var combo = [];
+	var result = 0;
+	var certCombo = [];
+	var possWinCombos = [];
+	
+	//get all combos that do not have player's turns
+	for (var i=0; i< winCombo.length; i++){
+		
+		combo = playerTurns.filter(function(elem){
+			return winCombo[i].includes(elem);
+		});
+		
+		if (combo.length === 0) 
+			possWinCombos.push(winCombo[i]);
+	}
+	
+	possWinCombos.sort(possComboSort);
+	
+	return possWinCombos[0];
+	
+}
+
+//sort function for possible combos
+function possComboSort(comboA, comboB) {
+	
+	var comboAAIturns = occurencesCounter(AITurns, comboA);
+	var comboBAIturns = occurencesCounter(AITurns, comboB);
+	
+	if (comboAAIturns < comboBAIturns)
+		return 1;
+	if (comboAAIturns > comboBAIturns)
+		return -1;
+	return 0;
+}
+
+//counts how many AIturns are in a possibleCombo array
+function occurencesCounter(AITurns, posCombo) {
+	
+	var occurence = [];
+	
+	occurence = AITurns.filter(function(elem){
+		return posCombo.includes(elem);
+	});
+	
+	return occurence.length;
 }
 
 //check if player's array has a winCombo
@@ -237,25 +311,36 @@ function checkEachPlayerWin(playerArr){
 	return result;
 }
 
-//check if a player is close to a combo
-function checkPlayerCloseToCombo(){
+//check if a player is close to a combo - return his last cell
+function checkPlayerCloseToCombo(turnsArray){
 	
 	var combo = [];
-	var result = false;
-		
+	var result = 0;
+
 	for (var i=0; i< winCombo.length; i++){
 		
-		combo = playerTurns.filter(function(elem){
+		combo = turnsArray.filter(function(elem){
 			return winCombo[i].includes(elem);
 		})
 		
 		if (combo.length === 2)
 		{
-			//return a cell which is not filled yet - todo
-			result = true;
-			break;
+			//return a cell which is not filled yet
+			for (let j=0; j< winCombo[i].length; j++){
+				if (winCombo[i][j] !== combo[0] && winCombo[i][j] !== combo[1])
+					result = winCombo[i][j]
+			}    
+			
+		
+			let freeCells = getFreeCells();
+			if (freeCells.includes(result))
+			  break;
+		    else
+				result = 0;
 		}
 	}
+	
+
 	//return 0 if player is not close to any combo yet
 	return result;
 }
